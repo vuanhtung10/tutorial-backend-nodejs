@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+var mongoose_delete = require('mongoose-delete');
 const customerSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
@@ -10,8 +10,18 @@ const customerSchema = new mongoose.Schema(
         description: String,
         image: String,
     },
-    { timestamps: true },
+    {
+        timestamps: true,
+        // statics: {
+        //     findByHoidanIT(name) {
+        //         return this.find({ name: new RegExp(name, 'i') });
+        //     },
+        // },
+    },
 );
-const Customer = mongoose.model('user', customerSchema);
+// Override all methods
+
+customerSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
+const Customer = mongoose.model('Customer', customerSchema);
 
 module.exports = Customer;

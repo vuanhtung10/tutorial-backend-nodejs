@@ -1,4 +1,4 @@
-const Customer = require('../models/Customer');
+const Customer = require('../models/customer');
 
 const createCustomerService = async (customerData) => {
     try {
@@ -49,5 +49,34 @@ const putUpdateCustomers = async (id, name, email, address) => {
         return null;
     }
 };
+const deleteACustomerService = async (id, name, email, address) => {
+    try {
+        let result = await Customer.deleteById({
+            _id: id,
+        });
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
+const deleteArrayCustomerService = async (arrIds) => {
+    try {
+        let result = await Customer.delete({
+            _id: { $in: arrIds },
+        });
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
 
-module.exports = { createCustomerService, createArrayCustomerService, getAllCustomerService, putUpdateCustomers };
+module.exports = {
+    createCustomerService,
+    createArrayCustomerService,
+    getAllCustomerService,
+    putUpdateCustomers,
+    deleteACustomerService,
+    deleteArrayCustomerService,
+};
